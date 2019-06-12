@@ -5,7 +5,7 @@ Formal Verification: Tree Sort
 beings can understand them clearly.”
 ─Donald Knuth
 
-## The algorith
+## The algorithm
 
 A tree sort is a sort algorithm that builds a binary search tree from the elements to be sorted,
 and then traverses the tree (in-order) so that the elements come out in sorted order. Its typical 
