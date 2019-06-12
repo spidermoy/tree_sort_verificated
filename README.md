@@ -3,6 +3,7 @@ Formal Verification: Tree Sort
 
 “The best programs are written so that computing machines can perform them quickly and so that human
 beings can understand them clearly.”
+
 ─Donald Knuth
 
 ## The algorithm
