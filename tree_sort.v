@@ -6,6 +6,7 @@
 *)
 
 Require Import List.
+Require Import Coq.Unicode.Utf8_core.
 
 (* Definition: x ∊ L, where 'L' is a simple list. *)
 Fixpoint in_list (x:nat) (l:list nat) :=
@@ -19,7 +20,7 @@ Fixpoint in_list (x:nat) (l:list nat) :=
 Fixpoint list_is_sort (l:list nat) :=
   match l with
   | nil   => True
-  | x::xs => (forall y, in_list y xs -> x <= y) /\ list_is_sort xs
+  | x::xs => (∀ y, in_list y xs -> x <= y) /\ list_is_sort xs
   end.
 
 
@@ -41,8 +42,8 @@ Fixpoint in_tree n t :=
 Fixpoint bstree t :=
   match t with
   | Void    => True
-  | N n l r => (forall m, in_tree m l -> m < n)  /\
-               (forall m, in_tree m r -> n <= m) /\
+  | N n l r => (∀ m, in_tree m l -> m < n)  /\
+               (∀ m, in_tree m r -> n <= m) /\
                 bstree l /\ bstree r
   end.
 
@@ -50,7 +51,7 @@ Fixpoint bstree t :=
 (* Definition: In-order tree traversal. *)
 Fixpoint in_order (t:btree) :=
   match t with
-  | Void      => nil
+  | Void    => nil
   | N n l r => in_order l ++ (n::in_order r)
   end.
 
@@ -58,8 +59,8 @@ Fixpoint in_order (t:btree) :=
 Definition leaf n := N n Void Void.
 
 
-(* Definition: Insert a number in a BST.*)
-Function insert_BST x t :=
+(* Definition: Insert a number in a BST. *)
+Fixpoint insert_BST x t :=
   match t with
   | Void    => leaf x
   | N n l r => match Nat.ltb x n with
@@ -80,7 +81,7 @@ Fixpoint insert_list_in_BST l t :=
 (* List to BST. *)
 Definition list_to_BST l := insert_list_in_BST l Void.
 
-Proposition in_insertBST : forall m x t, in_tree m (insert_BST x t) ->
+Proposition in_insertBST : ∀ m x t, in_tree m (insert_BST x t) ->
                                                          (m = x \/ in_tree m t).
 Proof.
 intros.
@@ -121,7 +122,7 @@ right; right; trivial.
 Qed.
 
 
-Lemma insertBST : forall x t, bstree t -> bstree (insert_BST x t).
+Lemma insertBST : ∀ x t, bstree t -> bstree (insert_BST x t).
 Proof.
 (* base case *)
 intros.
@@ -135,7 +136,7 @@ rewrite e.
 simpl.
 split.
 intros.
-assert (forall x n, Nat.ltb x n = true -> x < n).
+assert (∀ x n, Nat.ltb x n = true -> x < n).
   intro.
   induction x0.
   destruct n0.
@@ -188,7 +189,7 @@ apply H.
 Qed.
 
 
-Lemma insertListToBST : forall l t, bstree t -> bstree (insert_list_in_BST l t).
+Lemma insertListToBST : ∀ l t, bstree t -> bstree (insert_list_in_BST l t).
 Proof.
 induction l.
 (* base case *)
@@ -202,7 +203,7 @@ apply insertBST; trivial.
 Qed.
 
 
-Lemma tailSort : forall l, list_is_sort l -> list_is_sort (tail l).
+Lemma tailSort : ∀ l, list_is_sort l -> list_is_sort (tail l).
 Proof.
 induction l.
 (* base case *)
@@ -216,7 +217,7 @@ apply H.
 Qed.
 
 
-Lemma InAppend : forall x l1 l2, in_list x (l1 ++ l2) ->
+Lemma InAppend : ∀ x l1 l2, in_list x (l1 ++ l2) ->
                                                  (in_list x l1 \/ in_list x l2).
 Proof.
 intros.
@@ -239,9 +240,9 @@ right; trivial.
 Qed.
 
 
-Lemma sortAppend : forall l1 l2 n, list_is_sort l1 ->
+Lemma sortAppend : ∀ l1 l2 n, list_is_sort l1 ->
                                    list_is_sort (n::l2) ->
-                                   (forall m, in_list m l1 -> m <= n) ->
+                                   (∀ m, in_list m l1 -> m <= n) ->
                                    list_is_sort (l1 ++ (n::l2)).
 Proof.
 intro.
@@ -280,7 +281,7 @@ right; trivial.
 Qed.
 
 
-Lemma InTree_iff_InList : forall x t, in_tree x t <-> in_list x (in_order t).
+Lemma InTree_iff_InList : ∀ x t, in_tree x t <-> in_list x (in_order t).
 Proof.
 (* -> *)
 split.
@@ -291,7 +292,7 @@ inversion H.
 (* inductive case *)
 intros.
 simpl.
-assert (forall x l1 l2, (in_list x l1 \/ in_list x l2) -> in_list x (l1 ++ l2)).
+assert (∀ x l1 l2, (in_list x l1 \/ in_list x l2) -> in_list x (l1 ++ l2)).
   intros.
   induction l1.
   simpl.
@@ -349,7 +350,7 @@ apply IHt2; trivial.
 Qed.
 
 
-Lemma inOrderSort : forall t, bstree t -> list_is_sort (in_order t).
+Lemma inOrderSort : ∀ t, bstree t -> list_is_sort (in_order t).
 Proof.
 induction t.
 (* base case *)
@@ -381,7 +382,7 @@ Qed.
 Definition tree_sort l := in_order (list_to_BST l).
 
 
-Theorem treeSort_correct : forall l, list_is_sort (tree_sort l).
+Theorem treeSort_correct : ∀ l, list_is_sort (tree_sort l).
 Proof.
 intros.
 unfold tree_sort.
