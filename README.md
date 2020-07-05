@@ -17,7 +17,7 @@ in sorted order. (See [Wikipedia](https://en.wikipedia.org/wiki/Tree_sort)).
 
 ## Coq
 
-I used CoqIde 8.6. The script contains:
+I used CoqIde 8.11.1 The script contains:
 
     * Definitions: binary tree, binary search tree, tree sort, etc.
     * Functions: in-order transversal, list-to-BST, etc.
