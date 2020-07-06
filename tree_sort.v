@@ -217,8 +217,7 @@ apply H.
 Qed.
 
 
-Lemma InAppend : ∀ x l1 l2, in_list x (l1 ++ l2) ->
-                                                 (in_list x l1 \/ in_list x l2).
+Lemma InAppend : ∀ x l1 l2, in_list x (l1 ++ l2) -> (in_list x l1 \/ in_list x l2).
 Proof.
 intros.
 induction l1.
@@ -241,9 +240,9 @@ Qed.
 
 
 Lemma sortAppend : ∀ l1 l2 n, list_is_sort l1 ->
-                                   list_is_sort (n::l2) ->
-                                   (∀ m, in_list m l1 -> m <= n) ->
-                                   list_is_sort (l1 ++ (n::l2)).
+                              list_is_sort (n::l2) ->
+                              (∀ m, in_list m l1 -> m <= n) ->
+                              list_is_sort (l1 ++ (n::l2)).
 Proof.
 intro.
 induction l1.
