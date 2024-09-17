@@ -7,6 +7,7 @@
 
 Require Import List.
 Require Import Coq.Unicode.Utf8_core.
+Require Import Coq.Arith.Lt.
 
 (* Definition: x ∊ L, where 'L' is a simple list. *)
 Fixpoint in_list (x:nat) (l:list nat) :=

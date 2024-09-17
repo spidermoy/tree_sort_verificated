@@ -1,0 +1,26 @@
+# Archivos de compilación
+*.vo
+*.glob
+
+# Archivos de log de compilación
+*.aux
+*.vok
+*.vos
+
+# Archivos de sesión (si usas CoqIDE)
+.coq-session
+.coq-session.cache/
+
+# Otros archivos innecesarios
+*.o
+*.a
+*.cmx
+*.cmi
+*.cmxs
+*.exe
+*.obj
+*.out
+*.log
+
+# Archivos de backup de editores
+*~
